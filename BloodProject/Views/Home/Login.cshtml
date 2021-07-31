@@ -1,0 +1,78 @@
+﻿@model BloodProject.Models.User
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+}
+
+
+
+@*@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>User</h4>
+        <div class="form-group">
+            @Html.LabelFor(model => model.username, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger " })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.password, new { htmlAttributes = new { @class = "form-control col-md-2" } })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}*@
+<h1></h1>
+<div class="login-body" style="padding-top:5%">
+    <article class="container-login center-block">
+        <section>
+           
+            <div class="tab-content tabs-login col-lg-12 col-md-12 col-sm-12 cols-xs-12">
+                <div id="login-access" class="tab-pane fade active in">
+                    <h2><i class="glyphicon glyphicon-log-in"></i>Admin Login</h2>
+                    <form method="post" action="~/home/login" accept-charset="utf-8" autocomplete="off" role="form" class="form-horizontal">
+                        <div class="form-group ">
+                            <label for="username" class="sr-only">Email</label>
+                            <input required type="email" class="form-control" name="username" id="username"
+                                   placeholder="Email" tabindex="1" value="" />
+                        </div>
+                        <div class="form-group ">
+                            <label for="password" class="sr-only" >Password</label>
+                            <input required type="password" class="form-control" name="password" id="password"
+                                   placeholder="Password" value="" tabindex="2" />
+                        </div>
+                      
+                        <br />
+                        <div class="form-group ">
+                            <button type="submit" name="log-me-in" id="submit" tabindex="5" class="btn btn-lg btn-primary">Enter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </article>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@section styles {
+<link href="~/Content/logincss.css" rel="stylesheet" />
+}

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<BloodProject.Models.BloodType>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+          
+            @Html.CheckBox(item.id.ToString(),(bool) item.isllowedfor(Convert.ToInt32(ViewBag.bloodtypeid_)), new { @class = "ckb", Id = item.id })
+            
+        </td>
+
+    </tr>
+}
+
+</table>
+<div>
+    <input type="button" id="AllowItems" value="save" onclick="save(@ViewBag.bloodtypeid_)"/>
+</div>
+
+<script>
+
+    @*function save() {
+        alert("s");
+        checkedIds = $(".ckb").filter(":checked").map(function () { return this.id; });
+      
+          $.ajax({
+            type: "Get",
+            url: "@Url.Action("AllowBloodTypes")",
+            traditional: true,
+        data: { BloodTypeid=@ViewBag.bloodtypeid_, Ids:checkedIds.toArray()},
+        success: successFunc,
+        error: errorFunc
+    });     
+    };*@
+
+  
+ 
+    function successFunc(data, status) {
+        alert("su");
+    }
+
+    function errorFunc() {
+        alert('error');
+    }
+</script>

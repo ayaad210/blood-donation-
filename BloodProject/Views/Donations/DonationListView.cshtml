@@ -1,0 +1,152 @@
+﻿@model IEnumerable<BloodProject.Models.Donation>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+}
+
+
+<div class="col-lg-1"></div>
+
+        <div class="container  col-lg-7  center-block " style="padding-top:3%"  >
+
+
+            <div class="mycol img-rounded  media-heading row">
+                @using (Ajax.BeginForm("Search", null, new AjaxOptions()
+                {
+                    UpdateTargetId = "UpdatePanel",
+                    HttpMethod = "POST",
+                    InsertionMode = InsertionMode.Replace,
+                    LoadingElementId = "loadingpic",
+                    OnBegin = "HideData",
+                    OnComplete = "ShowData"
+                }, htmlAttributes: new { @id = "form1" }))
+                {
+                    <div class="col-lg-1"></div>
+                <div class="col-lg-5 ">
+                    <span>place</span>
+                    @Html.DropDownList("place", ViewBag.places as SelectList, "- All --", new { @id = "place", @class = "srchdrop form-control " })
+                </div>
+                <div class="col-lg-5 ">
+                    <span>blood Type</span>
+
+                    @Html.DropDownList("BloodType", ViewBag.BloodTypes as SelectList, "- Select BloodType -", new { @id = "BloodType", @class = "srchdrop form-control" })
+                    </div>
+                    <div class="left" hidden>
+                        <button class="btn btn-default  text-primary" type="submit" hidden><span>Search</span></button>
+                    </div>
+                    }
+                </div>
+
+            <div class="row">
+
+                <div id="loadingpic" style="display:none">
+                    <img id="loading" alt="Loading Image" src="~/Content/Images/1.gif" />
+                </div>
+
+                <div id="UpdatePanel">
+
+                    @Html.Partial("DonationPartial", Model)
+
+                </div>
+
+            </div>
+        </div>
+      
+<div id="updatepanel2" class="col-lg-4 " style="padding-top:3%">
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    @section Scripts{
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+
+        <script>
+            function hide() {
+                var x = document.getElementById("formacc");
+                x.style.display = "none";
+            }
+            $(document).ready(function () {
+                document.getElementById("UpdatePanel").style.display = "block";
+            });
+
+            $(".srchdrop").change(function (e) {
+                $("#form1").submit();
+            })
+
+
+
+            function HideData() {
+                document.getElementById("UpdatePanel").style.display = "none";
+
+            }
+            function ShowData() {
+                document.getElementById("UpdatePanel").style.display = "block";
+
+            }
+
+            function addacc( donid) {
+                var meterId =String(donid);
+               
+
+                if (meterId && meterId != '') {
+                    $.ajax({
+                     url: '@Url.Action("Create", "AcceptorAccesses")',
+                    type: 'GET',
+                    cache: false,
+                    data: { donid: meterId }
+                    }).done(function (result) {
+                    //    alert(result);
+                        document.getElementById('updatepanel2').innerHTML = result;
+                    });
+            }
+            };
+
+
+        </script>
+
+    }
+
+    @section Styles{
+        <style>
+            .panel-body {
+                padding: 20px;
+                margin: 10px;
+                height: 150px;
+                overflow: hidden;
+            }
+
+            .panel-heading {
+                height: 50px;
+                margin: 5px;
+                text-align: left;
+                font-size: 16px;
+            }
+
+            .panel-footer {
+            }
+        </style>
+
+    }
+
+
+
+

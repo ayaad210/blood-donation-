@@ -1,0 +1,452 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BloodDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AcceptorAccesses">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DonorId" Type="int" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="accesscount" Type="int" />
+        </EntityType>
+        <EntityType Name="AllowBloods">
+          <Key>
+            <PropertyRef Name="BloodTypeid" />
+            <PropertyRef Name="AllowedBloodID" />
+          </Key>
+          <Property Name="BloodTypeid" Type="int" Nullable="false" />
+          <Property Name="AllowedBloodID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BloodTypes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contacts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Donations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="place" Type="int" />
+          <Property Name="address" Type="nvarchar" MaxLength="500" />
+          <Property Name="BloodType" Type="int" />
+          <Property Name="gender" Type="bit" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="LastDon" Type="date" />
+          <Property Name="isFree" Type="bit" />
+        </EntityType>
+        <EntityType Name="Notes">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="text" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Places">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AcceptorAccesses_Donations">
+          <End Role="Donations" Type="Self.Donations" Multiplicity="1" />
+          <End Role="AcceptorAccesses" Type="Self.AcceptorAccesses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Donations">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AcceptorAccesses">
+              <PropertyRef Name="DonorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AllowBloods_BloodTypes">
+          <End Role="BloodTypes" Type="Self.BloodTypes" Multiplicity="1" />
+          <End Role="AllowBloods" Type="Self.AllowBloods" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AllowBloods">
+              <PropertyRef Name="BloodTypeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AllowBloods_BloodTypes1">
+          <End Role="BloodTypes" Type="Self.BloodTypes" Multiplicity="1" />
+          <End Role="AllowBloods" Type="Self.AllowBloods" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AllowBloods">
+              <PropertyRef Name="AllowedBloodID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Donations_BloodTypes">
+          <End Role="BloodTypes" Type="Self.BloodTypes" Multiplicity="0..1" />
+          <End Role="Donations" Type="Self.Donations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodTypes">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Donations">
+              <PropertyRef Name="BloodType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Donations_Places">
+          <End Role="Places" Type="Self.Places" Multiplicity="0..1" />
+          <End Role="Donations" Type="Self.Donations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Places">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Donations">
+              <PropertyRef Name="place" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BloodDatabaseModelStoreContainer">
+          <EntitySet Name="AcceptorAccesses" EntityType="Self.AcceptorAccesses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AllowBloods" EntityType="Self.AllowBloods" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BloodTypes" EntityType="Self.BloodTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contacts" EntityType="Self.Contacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Donations" EntityType="Self.Donations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notes" EntityType="Self.Notes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Places" EntityType="Self.Places" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AcceptorAccesses_Donations" Association="Self.FK_AcceptorAccesses_Donations">
+            <End Role="Donations" EntitySet="Donations" />
+            <End Role="AcceptorAccesses" EntitySet="AcceptorAccesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AllowBloods_BloodTypes" Association="Self.FK_AllowBloods_BloodTypes">
+            <End Role="BloodTypes" EntitySet="BloodTypes" />
+            <End Role="AllowBloods" EntitySet="AllowBloods" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AllowBloods_BloodTypes1" Association="Self.FK_AllowBloods_BloodTypes1">
+            <End Role="BloodTypes" EntitySet="BloodTypes" />
+            <End Role="AllowBloods" EntitySet="AllowBloods" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Donations_BloodTypes" Association="Self.FK_Donations_BloodTypes">
+            <End Role="BloodTypes" EntitySet="BloodTypes" />
+            <End Role="Donations" EntitySet="Donations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Donations_Places" Association="Self.FK_Donations_Places">
+            <End Role="Places" EntitySet="Places" />
+            <End Role="Donations" EntitySet="Donations" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BloodDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AcceptorAccess">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DonorId" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="accesscount" Type="Int32" />
+          <NavigationProperty Name="Donation" Relationship="BloodDatabaseModel.FK_AcceptorAccesses_Donations" FromRole="AcceptorAccess" ToRole="Donation" />
+        </EntityType>
+        <EntityType Name="BloodType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="BloodTypes1" Relationship="Self.AllowBloods" FromRole="BloodTypes" ToRole="BloodTypes1" />
+          <NavigationProperty Name="BloodTypes" Relationship="Self.AllowBloods" FromRole="BloodTypes1" ToRole="BloodTypes" />
+          <NavigationProperty Name="Donations" Relationship="BloodDatabaseModel.FK_Donations_BloodTypes" FromRole="BloodType" ToRole="Donation" />
+        </EntityType>
+        <EntityType Name="Donation">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="place" Type="Int32" />
+          <Property Name="address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="BloodType" Type="Int32" />
+          <Property Name="gender" Type="Boolean" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LastDon" Type="DateTime" Precision="0" />
+          <Property Name="isFree" Type="Boolean" />
+          <NavigationProperty Name="AcceptorAccesses" Relationship="BloodDatabaseModel.FK_AcceptorAccesses_Donations" FromRole="Donation" ToRole="AcceptorAccess" />
+          <NavigationProperty Name="BloodType1" Relationship="BloodDatabaseModel.FK_Donations_BloodTypes" FromRole="Donation" ToRole="BloodType" />
+          <NavigationProperty Name="Place1" Relationship="BloodDatabaseModel.FK_Donations_Places" FromRole="Donation" ToRole="Place" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Place">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Donations" Relationship="BloodDatabaseModel.FK_Donations_Places" FromRole="Place" ToRole="Donation" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <Association Name="AllowBloods">
+          <End Role="BloodTypes" Type="Self.BloodType" Multiplicity="*" />
+          <End Role="BloodTypes1" Type="Self.BloodType" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="BloodDatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AcceptorAccesses" EntityType="Self.AcceptorAccess" />
+          <EntitySet Name="BloodTypes" EntityType="Self.BloodType" />
+          <EntitySet Name="Donations" EntityType="Self.Donation" />
+          <EntitySet Name="Notes" EntityType="Self.Note" />
+          <EntitySet Name="Places" EntityType="Self.Place" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="AllowBloods" Association="Self.AllowBloods">
+            <End Role="BloodTypes" EntitySet="BloodTypes" />
+            <End Role="BloodTypes1" EntitySet="BloodTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AcceptorAccesses_Donations" Association="BloodDatabaseModel.FK_AcceptorAccesses_Donations">
+            <End Role="Donation" EntitySet="Donations" />
+            <End Role="AcceptorAccess" EntitySet="AcceptorAccesses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Donations_BloodTypes" Association="BloodDatabaseModel.FK_Donations_BloodTypes">
+            <End Role="BloodType" EntitySet="BloodTypes" />
+            <End Role="Donation" EntitySet="Donations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Donations_Places" Association="BloodDatabaseModel.FK_Donations_Places">
+            <End Role="Place" EntitySet="Places" />
+            <End Role="Donation" EntitySet="Donations" />
+          </AssociationSet>
+          <EntitySet Name="Contacts" EntityType="BloodDatabaseModel.Contact" />
+        </EntityContainer>
+        <Association Name="FK_AcceptorAccesses_Donations">
+          <End Type="BloodDatabaseModel.Donation" Role="Donation" Multiplicity="1" />
+          <End Type="BloodDatabaseModel.AcceptorAccess" Role="AcceptorAccess" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Donation">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="AcceptorAccess">
+              <PropertyRef Name="DonorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Donations_BloodTypes">
+          <End Type="BloodDatabaseModel.BloodType" Role="BloodType" Multiplicity="0..1" />
+          <End Type="BloodDatabaseModel.Donation" Role="Donation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BloodType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Donation">
+              <PropertyRef Name="BloodType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Donations_Places">
+          <End Type="BloodDatabaseModel.Place" Role="Place" Multiplicity="0..1" />
+          <End Type="BloodDatabaseModel.Donation" Role="Donation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Place">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Donation">
+              <PropertyRef Name="place" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BloodDatabaseModelStoreContainer" CdmEntityContainer="BloodDatabaseEntities">
+          <EntitySetMapping Name="AcceptorAccesses">
+            <EntityTypeMapping TypeName="BloodDatabaseModel.AcceptorAccess">
+              <MappingFragment StoreEntitySet="AcceptorAccesses">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="DonorId" ColumnName="DonorId" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="accesscount" ColumnName="accesscount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BloodTypes">
+            <EntityTypeMapping TypeName="BloodDatabaseModel.BloodType">
+              <MappingFragment StoreEntitySet="BloodTypes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Donations">
+            <EntityTypeMapping TypeName="BloodDatabaseModel.Donation">
+              <MappingFragment StoreEntitySet="Donations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="place" ColumnName="place" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="BloodType" ColumnName="BloodType" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastDon" ColumnName="LastDon" />
+                <ScalarProperty Name="isFree" ColumnName="isFree" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="BloodDatabaseModel.Note">
+              <MappingFragment StoreEntitySet="Notes">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="text" ColumnName="text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Places">
+            <EntityTypeMapping TypeName="BloodDatabaseModel.Place">
+              <MappingFragment StoreEntitySet="Places">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="BloodDatabaseModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="BloodDatabaseModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AllowBloods" TypeName="BloodDatabaseModel.AllowBloods" StoreEntitySet="AllowBloods">
+            <EndProperty Name="BloodTypes">
+              <ScalarProperty Name="id" ColumnName="BloodTypeid" />
+            </EndProperty>
+            <EndProperty Name="BloodTypes1">
+              <ScalarProperty Name="id" ColumnName="AllowedBloodID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="BloodDatabaseModel.Contact">
+              <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

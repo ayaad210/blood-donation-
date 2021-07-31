@@ -1,0 +1,90 @@
+﻿@model IEnumerable<BloodProject.Models.Donation>
+
+
+
+
+<table class="table table-striped "style="font-size:medium;font-weight:bold">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.place)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address)
+        </th>
+        <th>
+            Blood Type
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gender)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.isFree)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Place1.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BloodType1.Name)
+            </td>
+            <td>
+                @{ string  g= (item.gender ? "Male" : "female") ;}
+                @g
+            </td>
+
+
+
+            <td>
+                @{string f = (item.isFree == true ? "Free" : "Not Free") ;}
+                @f
+            </td>
+            <td>
+                @*@Html.ActionLink("Contact Info", "Create", "AcceptorAccesses", new { donid = item.id },new { }) |*@
+                <input type="button"  id="#btnAcc" class="btnAcc mycol" value="Contact Info" onclick="addacc(@item.id)" />
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@*<script>
+
+    document.getElementById("btnAcc").addEventListener("click",
+     function (e) {
+
+         alert("s");
+
+         var meterId = e.id;
+         alert(meterId);
+         var link = "~/Acceptoraccess/Create";
+
+         if (meterId && meterId != '') {
+             $.ajax({
+                 url: link,
+                 type: 'GET',
+                 cache: false,
+                 data: { donid: meterId }
+             }).done(function (result) {
+                 $('#UpdatePanel2').html(result);
+             });
+         }
+     }
+
+     );
+</script>*@

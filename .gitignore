@@ -1,0 +1,6 @@
+packages
+packages/**
+.vs
+.vs/**
+bloodproject/obj
+bloodproject/bin
